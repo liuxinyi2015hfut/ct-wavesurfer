@@ -1,0 +1,11 @@
+export type WaveSurfer=any;
+export type CursorPlugin=any;
+export type ElanPlugin=any;
+export type MarkersPlugin=any;
+export type MediaSessionPlugin=any;
+export type MicrophonePlugin=any;
+export type MinimapPlugin=any;
+export type PlayheadPlugin=any;
+export type RegionsPlugin=any;
+export type SpectrogramPlugin=any;
+export type TimelinePlugin=any;
