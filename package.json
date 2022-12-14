@@ -1,10 +1,11 @@
 {
   "name": "wavesurfer",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "wavesurfer.js",
   "main": "lib",
   "module": "esm",
+  "types": "esm/index.d.ts",
   "scripts": {
     "build": "rollup --config"
   },
