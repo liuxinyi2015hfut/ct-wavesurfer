@@ -2,8 +2,9 @@ import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import { getBabelOutputPlugin } from "@rollup/plugin-babel"
 import { terser } from 'rollup-plugin-terser'
+import replace from '@rollup/plugin-replace'
 import copy from 'rollup-plugin-copy'
-
+import pckg from './package.json'
 
 
 export default [
@@ -15,6 +16,9 @@ export default [
           src: 'src/index.d.ts',
           dest: 'esm'
         }]
+      }),
+      replace({
+        __VERSION__: JSON.stringify(pckg.version)
       }),
       resolve(),
       commonjs(),
