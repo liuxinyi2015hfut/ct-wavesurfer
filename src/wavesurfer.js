@@ -590,7 +590,10 @@ export default class WaveSurfer extends util.Observer {
                 `Plugin ${plugin.name} does not have an instance property!`
             );
         }
-
+        if (this.initialisedPluginList[name]) {
+            // destroy any already initialised plugins
+            this.destroyPlugin(name);
+        }
         // staticProps properties are applied to wavesurfer instance
         if (plugin.staticProps) {
             Object.keys(plugin.staticProps).forEach(pluginStaticProp => {
@@ -634,10 +637,7 @@ export default class WaveSurfer extends util.Observer {
         if (!this[name]) {
             throw new Error(`Plugin ${name} has not been added yet!`);
         }
-        if (this.initialisedPluginList[name]) {
-            // destroy any already initialised plugins
-            this.destroyPlugin(name);
-        }
+        
         this[name].init();
         this.initialisedPluginList[name] = true;
         this.fireEvent('plugin-initialised', name);

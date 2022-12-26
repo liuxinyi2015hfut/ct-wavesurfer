@@ -246,10 +246,7 @@ export default class CursorPlugin {
      * Destroy the plugin (used by the Plugin API)
      */
     destroy() {
-        if (!this.cursorTime || !this.showTime){
-            this.isDestroyCalled = true;
-            return;
-        }
+        this.isDestroyCalled = true;
         if (this.params.showTime) {
             this.showTime && this.showTime.remove();
         }
