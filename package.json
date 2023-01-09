@@ -1,6 +1,5 @@
 {
   "name": "wavesurfer",
-  "private": true,
   "version": "6.4.0",
   "description": "wavesurfer.js",
   "main": "lib",
@@ -36,5 +35,8 @@
   },
   "dependencies": {
     "debounce": "^1.2.1"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
