@@ -251,10 +251,10 @@ export default class CursorPlugin {
             this.showTime && this.showTime.remove();
         }
         this.cursor && this.cursor.remove();
-        this.wrapper.removeEventListener('mousemove', this._onMousemove);
+        this.wrapper?.removeEventListener('mousemove', this._onMousemove);
         if (this.params.hideOnBlur) {
-            this.wrapper.removeEventListener('mouseenter', this._onMouseenter);
-            this.wrapper.removeEventListener('mouseleave', this._onMouseleave);
+            this.wrapper?.removeEventListener('mouseenter', this._onMouseenter);
+            this.wrapper?.removeEventListener('mouseleave', this._onMouseleave);
         }
     }
 
