@@ -109,7 +109,12 @@ export class Region {
         }
         if (params.resize != null) {
             this.resize = Boolean(params.resize);
-            this.updateHandlesResize(this.resize);
+        }
+        if(params.preventContextMenu !=null){
+            this.preventContextMenu =Boolean(params.preventContextMenu)
+        }
+        if(params.showTooltip!=null){
+            this.showTooltip=Boolean(params.showTooltip)
         }
         if (params.drag != null) {
             this.drag = Boolean(params.drag);
@@ -177,9 +182,6 @@ export class Region {
         );
 
         this.element.className = 'wavesurfer-region';
-        if (this.showTooltip) {
-            this.element.title = this.formatTime(this.start, this.end);
-        }
         this.element.setAttribute('data-id', this.id);
 
         for (const attrname in this.attributes) {
@@ -196,8 +198,7 @@ export class Region {
             top: this.marginTop
         });
 
-        /* Resize handles */
-        if (this.resize) {
+        // /* Resize handles */
             this.handleLeftEl = this.util.withOrientation(
                 this.element.appendChild(document.createElement('handle')),
                 this.vertical
@@ -209,43 +210,6 @@ export class Region {
 
             this.handleLeftEl.className = 'wavesurfer-handle wavesurfer-handle-start';
             this.handleRightEl.className = 'wavesurfer-handle wavesurfer-handle-end';
-
-            // Default CSS properties for both handles.
-            const css = {
-                cursor: this.vertical ? 'row-resize' : 'col-resize',
-                position: 'absolute',
-                top: '0px',
-                width: '2px',
-                height: '100%',
-                backgroundColor: 'rgba(0, 0, 0, 1)'
-            };
-
-            // Merge CSS properties per handle.
-            const handleLeftCss =
-                this.handleStyle.left !== 'none'
-                    ? Object.assign(
-                        { left: '0px' },
-                        css,
-                        this.handleStyle.left
-                    )
-                    : null;
-            const handleRightCss =
-                this.handleStyle.right !== 'none'
-                    ? Object.assign(
-                        { right: '0px' },
-                        css,
-                        this.handleStyle.right
-                    )
-                    : null;
-
-            if (handleLeftCss) {
-                this.style(this.handleLeftEl, handleLeftCss);
-            }
-
-            if (handleRightCss) {
-                this.style(this.handleRightEl, handleRightCss);
-            }
-        }
 
         this.updateRender();
         this.bindEvents();
@@ -316,6 +280,46 @@ export class Region {
 
             if (this.showTooltip) {
                 this.element.title = this.formatTime(this.start, this.end);
+            } else {
+                this.element.title =''
+            }
+
+            /* Resize handles */
+
+            // Default CSS properties for both handles.
+            const css = {
+                cursor: this.vertical ? 'row-resize' : 'col-resize',
+                position: 'absolute',
+                top: '0px',
+                width: '2px',
+                height: '100%',
+                backgroundColor: 'rgba(0, 0, 0, 1)',
+            };
+            const resizeCSS=this.resize?{
+                cursor: this.vertical ? 'row-resize' : 'col-resize',
+                display: 'block'
+            }: {
+                cursor: 'auto',
+                display: 'none'
+            }
+            // Merge CSS properties per handle.
+            if(this.handleLeftEl){
+                const handleLeftCss ={
+                    ...css,
+                    left: '0px',
+                    ...(this.handleStyle?.left||{}),
+                    ...resizeCSS
+                }
+                this.style(this.handleLeftEl, handleLeftCss);
+            }
+            if(this.handleRightEl){
+                const handleRightCss ={
+                    ...css,
+                    right: '0px' ,
+                    ...(this.handleStyle?.right||{}),
+                    ...resizeCSS
+                }
+                this.style(this.handleRightEl, handleRightCss);
             }
         }
     }
@@ -681,7 +685,7 @@ export class Region {
         this.element.addEventListener('touchstart', onDown);
 
         document.body.addEventListener('mousemove', onMove);
-        document.body.addEventListener('touchmove', onMove, {passive: false});
+        document.body.addEventListener('touchmove', onMove, { passive: false });
 
         document.addEventListener('mouseup', onUp);
         document.body.addEventListener('touchend', onUp);
@@ -794,15 +798,4 @@ export class Region {
         }
     }
 
-    updateHandlesResize(resize) {
-        let cursorStyle;
-        if (resize) {
-            cursorStyle = this.vertical ? 'row-resize' : 'col-resize';
-        } else {
-            cursorStyle = 'auto';
-        }
-
-        this.handleLeftEl && this.style(this.handleLeftEl, { cursor: cursorStyle });
-        this.handleRightEl && this.style(this.handleRightEl, { cursor: cursorStyle });
-    }
 }
