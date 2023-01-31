@@ -110,11 +110,11 @@ export class Region {
         if (params.resize != null) {
             this.resize = Boolean(params.resize);
         }
-        if(params.preventContextMenu !=null){
-            this.preventContextMenu =Boolean(params.preventContextMenu)
+        if (params.preventContextMenu != null) {
+            this.preventContextMenu = Boolean(params.preventContextMenu)
         }
-        if(params.showTooltip!=null){
-            this.showTooltip=Boolean(params.showTooltip)
+        if (params.showTooltip != null) {
+            this.showTooltip = Boolean(params.showTooltip)
         }
         if (params.drag != null) {
             this.drag = Boolean(params.drag);
@@ -199,17 +199,17 @@ export class Region {
         });
 
         // /* Resize handles */
-            this.handleLeftEl = this.util.withOrientation(
-                this.element.appendChild(document.createElement('handle')),
-                this.vertical
-            );
-            this.handleRightEl = this.util.withOrientation(
-                this.element.appendChild(document.createElement('handle')),
-                this.vertical
-            );
+        this.handleLeftEl = this.util.withOrientation(
+            this.element.appendChild(document.createElement('handle')),
+            this.vertical
+        );
+        this.handleRightEl = this.util.withOrientation(
+            this.element.appendChild(document.createElement('handle')),
+            this.vertical
+        );
 
-            this.handleLeftEl.className = 'wavesurfer-handle wavesurfer-handle-start';
-            this.handleRightEl.className = 'wavesurfer-handle wavesurfer-handle-end';
+        this.handleLeftEl.className = 'wavesurfer-handle wavesurfer-handle-start';
+        this.handleRightEl.className = 'wavesurfer-handle wavesurfer-handle-end';
 
         this.updateRender();
         this.bindEvents();
@@ -281,7 +281,7 @@ export class Region {
             if (this.showTooltip) {
                 this.element.title = this.formatTime(this.start, this.end);
             } else {
-                this.element.title =''
+                this.element.title = ''
             }
 
             /* Resize handles */
@@ -295,28 +295,28 @@ export class Region {
                 height: '100%',
                 backgroundColor: 'rgba(0, 0, 0, 1)',
             };
-            const resizeCSS=this.resize?{
+            const resizeCSS = this.resize ? {
                 cursor: this.vertical ? 'row-resize' : 'col-resize',
                 display: 'block'
-            }: {
+            } : {
                 cursor: 'auto',
                 display: 'none'
             }
             // Merge CSS properties per handle.
-            if(this.handleLeftEl){
-                const handleLeftCss ={
+            if (this.handleLeftEl) {
+                const handleLeftCss = {
                     ...css,
                     left: '0px',
-                    ...(this.handleStyle?.left||{}),
+                    ...(this.handleStyle?.left || {}),
                     ...resizeCSS
                 }
                 this.style(this.handleLeftEl, handleLeftCss);
             }
-            if(this.handleRightEl){
-                const handleRightCss ={
+            if (this.handleRightEl) {
+                const handleRightCss = {
                     ...css,
-                    right: '0px' ,
-                    ...(this.handleStyle?.right||{}),
+                    right: '0px',
+                    ...(this.handleStyle?.right || {}),
                     ...resizeCSS
                 }
                 this.style(this.handleRightEl, handleRightCss);
